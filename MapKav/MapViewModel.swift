@@ -10,6 +10,7 @@ import MapKit
 import CoreLocation
 // All Map Data Goes Here....
 class MapViewModel: NSObject,ObservableObject,CLLocationManagerDelegate{
+    @Published var center: CLLocationCoordinate2D?
     @Published var mapView = MKMapView()
 // Region...
     @Published var region : MKCoordinateRegion!

@@ -93,15 +93,15 @@ struct Home: View {
                             .background(Color.primary)
                             .clipShape(Circle())
                     })
-                    
-                    Text ("Мои координаты: В: \(mapData.mapView.userLocation.coordinate.latitude) L: \(mapData.mapView.userLocation.coordinate.longitude)")
-                    
-                    
-                    
-                    if mapData.region != nil {
-                         // Сюда надо вывести координаты
-                        Text ("Целик:\()")
+                    if let center = mapData.center {
+                        Text ("Мои координаты: В: \(center.latitude) L: \(center.longitude)")
                     }
+//                    Text ("Мои координаты: В: \(mapData.mapView.userLocation.coordinate.latitude) L: \(mapData.mapView.userLocation.coordinate.longitude)")
+                    
+//                    if mapData.region != nil {
+//                         // Сюда надо вывести координаты
+//                        Text ("Целик:\()")
+//                    }
                    
                     
                 }

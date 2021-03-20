@@ -32,7 +32,7 @@ class MapViewModel: NSObject,ObservableObject,CLLocationManagerDelegate{
             mapType = .standard
             mapView.mapType = mapType
         }
-}
+    }
     // Focus Location...
     func focusLocation() {
         guard let _ = region else{return}
@@ -49,10 +49,11 @@ class MapViewModel: NSObject,ObservableObject,CLLocationManagerDelegate{
             guard let result = response else{return}
             self.places = result.mapItems.compactMap({ (item) -> Place? in
                 return Place(placemark: item.placemark)
-}) }
-}
+            })
+        }
+    }
     // Pick Search Result...
-    func selectPlace(place: Place){
+    func selectPlace(place: Place) {
         // Showing Pin On Map....
         searchTxt = ""
         guard let coordinate = place.placemark.location?.coordinate else{return}
@@ -67,6 +68,7 @@ class MapViewModel: NSObject,ObservableObject,CLLocationManagerDelegate{
         mapView.setRegion(coordinateRegion, animated: true)
         mapView.setVisibleMapRect(mapView.visibleMapRect, animated: true)
     }
+    
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         // Checking Permissions...
         switch manager.authorizationStatus {
@@ -79,9 +81,10 @@ class MapViewModel: NSObject,ObservableObject,CLLocationManagerDelegate{
         case .authorizedWhenInUse:
             // If Permissin Given...
             manager.requestLocation()
-        default:
-() }
+        default:()
+        }
     }
+    
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
 // Error....
         print(error.localizedDescription)
@@ -97,6 +100,5 @@ class MapViewModel: NSObject,ObservableObject,CLLocationManagerDelegate{
         
         print(location.coordinate)
     }
-    
-    
+
 }

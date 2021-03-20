@@ -96,14 +96,6 @@ struct Home: View {
                     if let center = mapData.center {
                         Text ("Мои координаты: В: \(center.latitude) L: \(center.longitude)")
                     }
-//                    Text ("Мои координаты: В: \(mapData.mapView.userLocation.coordinate.latitude) L: \(mapData.mapView.userLocation.coordinate.longitude)")
-                    
-//                    if mapData.region != nil {
-//                         // Сюда надо вывести координаты
-//                        Text ("Целик:\()")
-//                    }
-                   
-                    
                 }
                 .frame(maxWidth: .infinity, alignment: .trailing)
                 .padding()
@@ -128,8 +120,8 @@ struct Home: View {
             // You can use your own delay time to avoid Continous Search Request...
             let delay = 0.3
             DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-                if value == mapData.searchTxt{
-// Search...
+                if value == mapData.searchTxt {
+                    // Search...
                     self.mapData.searchQuery()
                 }
                 

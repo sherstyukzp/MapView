@@ -64,13 +64,8 @@ struct MapView: UIViewRepresentable {
             let currentLocation = mapView.centerCoordinate
                     print("👉 Координаты \(currentLocation)")
             center = currentLocation
-            //
-            
-            
-            //
-
-            
-            }
+        
+        }
     
     }
 }

@@ -13,7 +13,7 @@ struct MapView: UIViewRepresentable {
     
     
     func makeCoordinator() -> Coordinator {
-        return MapView.Coordinator()
+        return MapView.Coordinator(center: $mapData.center)
     }
     
     func makeUIView(context: Context) -> MKMapView {
@@ -38,6 +38,11 @@ struct MapView: UIViewRepresentable {
     }
     
     class Coordinator: NSObject,MKMapViewDelegate {
+        @Binding var center: CLLocationCoordinate2D?
+        
+        init(center: Binding<CLLocationCoordinate2D?>) {
+            self._center = center
+        }
         
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
             // Custom Pins....
@@ -58,7 +63,7 @@ struct MapView: UIViewRepresentable {
             
             let currentLocation = mapView.centerCoordinate
                     print("👉 Координаты \(currentLocation)")
-            
+            center = currentLocation
             //
             
             

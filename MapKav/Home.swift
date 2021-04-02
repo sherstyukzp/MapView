@@ -93,8 +93,13 @@ struct Home: View {
                             .background(Color.primary)
                             .clipShape(Circle())
                     })
+                    
                     if let center = mapData.center {
-                        Text ("Мои координаты: В: \(center.latitude) L: \(center.longitude)")
+                        Text ("Целик: В: \(center.latitude) L: \(center.longitude)")
+                        
+                        let adress = getAddressFromLatLon(pdblLatitude: "\(center.latitude)", withLongitude: "\(center.longitude)")
+                        
+                        //Text ("Адресс: \(adress.self)")
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .trailing)
@@ -130,8 +135,70 @@ struct Home: View {
         })
     }
     
-    func regionToString(_ region: MKCoordinateRegion) -> String {
-        "\(region.center.latitude), \(region.center.longitude)"
+    func getAddressFromLatLon(pdblLatitude: String, withLongitude pdblLongitude: String)
+    {
+        var center : CLLocationCoordinate2D = CLLocationCoordinate2D()
+        let lat: Double = Double("\(pdblLatitude)")!
+        
+        let lon: Double = Double("\(pdblLongitude)")!
+        
+        let ceo: CLGeocoder = CLGeocoder()
+        center.latitude = lat
+        center.longitude = lon
+        
+        
+
+        let loc: CLLocation = CLLocation(latitude:center.latitude, longitude: center.longitude)
+
+
+        ceo.reverseGeocodeLocation(loc, completionHandler:
+            {(placemarks, error) in
+                if (error != nil)
+                {
+                    print("reverse geodcode fail: \(error!.localizedDescription)")
+                }
+                let pm = placemarks! as [CLPlacemark]
+                if pm.count > 0
+                {
+                    let pm = placemarks![0]
+                    
+                    var addressString: String = ""
+                    
+                    if pm.subLocality != nil
+                    {
+                        addressString = addressString + pm.subLocality! + ", "
+                    }
+                    if pm.thoroughfare != nil {
+                        addressString = addressString + pm.thoroughfare! + ", "
+                    }
+                    if pm.subThoroughfare != nil {
+                        addressString = addressString + pm.subThoroughfare! + ", "
+                    }
+                    if pm.locality != nil {
+                        addressString = addressString + pm.locality! + ", "
+                    }
+                    if pm.country != nil
+                    {
+                        addressString = addressString + pm.country! + ", "
+                    }
+                    if pm.postalCode != nil
+                    {
+                        addressString = addressString + pm.postalCode! + " "
+                    }
+                    
+                    print("👉 Adress: \(addressString)")
+                    print("👉 Страна: \(pm.country ?? "Не определено")")
+                    print("👉 Город: \(pm.locality ?? "Не определено")")
+                    print("👉 Улица: \(pm.thoroughfare ?? "Не определено")")
+                    print("👉 Номер: \(pm.subThoroughfare ?? "Не определено")")
+                    print("👉 Район: \(pm.subLocality ?? "Не определено")")
+                    
+                    
+
+                }
+        })
+        
+
     }
 }
 
